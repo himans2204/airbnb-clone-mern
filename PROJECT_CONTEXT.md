@@ -48,3 +48,5 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - Atlas: the project reuses an existing free cluster. This app uses its own database, airbnb_clone.
 - Environment variables (in server/.env, not committed): PORT, MONGO_URI, JWT_SECRET. Cloudinary variables will be added later.
 - The server uses ES modules ("type": "module" in server/package.json).
+- Client: Vite (create-vite 9.x) with React and JavaScript, ESLint for linting, Tailwind CSS v4 through the @tailwindcss/vite plugin (no tailwind.config.js or PostCSS file).
+- The client dev server runs on port 5173 and the API on port 5001.

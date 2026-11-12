@@ -20,3 +20,8 @@ Server (run inside server/):
 - npm run dev starts the server with nodemon on port 5001
 - npm start starts it with node
 - Health check: GET http://localhost:5001/api/health
+
+Client (run inside client/):
+- npm run dev starts Vite on port 5173
+- npm run build creates a production build
+- npm run lint runs ESLint
