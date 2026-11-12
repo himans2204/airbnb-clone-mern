@@ -16,4 +16,7 @@ Read HANDOFF.md, PROJECT_CONTEXT.md, PROGRESS.md and NEXT_STEPS.md before making
 - After each major task update PROGRESS.md and NEXT_STEPS.md.
 
 ## Commands
-Commands will be added here once the server and client are initialised.
+Server (run inside server/):
+- npm run dev starts the server with nodemon on port 5001
+- npm start starts it with node
+- Health check: GET http://localhost:5001/api/health

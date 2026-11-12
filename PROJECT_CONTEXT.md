@@ -42,3 +42,9 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 ## Not decided yet
 - Final project name and branding
 - Exact role names and permissions (to be settled in the authentication milestone)
+
+## Setup notes
+- The server runs on port 5001 because macOS uses port 5000 for AirPlay Receiver.
+- Atlas: the project reuses an existing free cluster. This app uses its own database, airbnb_clone.
+- Environment variables (in server/.env, not committed): PORT, MONGO_URI, JWT_SECRET. Cloudinary variables will be added later.
+- The server uses ES modules ("type": "module" in server/package.json).
