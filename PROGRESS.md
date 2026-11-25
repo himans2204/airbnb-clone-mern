@@ -1,28 +1,29 @@
 # Progress
 
 ## Current milestone
-Milestone 2: frontend architecture and UI (in progress)
+Milestone 2 (frontend architecture and UI) is complete. Next: Milestone 3, backend structure.
 
 ## Completed
 - Milestone 1: tools checked, GitHub repo created, Express server connected to MongoDB Atlas (GET /api/health works), React client created with Vite, Tailwind v4, React Router and Axios
-- Brand name is StayinYourRoom (stored in client/src/config.js). Colour theme is teal (brand-*) and warm sand (sand-*), defined in client/src/index.css
-- Vite demo files removed
-- Added in client/src: main.jsx (BrowserRouter), App.jsx (route table), layouts/MainLayout.jsx, components/Navbar.jsx and Footer.jsx, and placeholder pages Home, Login, Register, PropertyDetails (/properties/:id), Dashboard, NotFound
+- Brand name is StayinYourRoom (client/src/config.js). Colour theme is teal (brand-*) and warm sand (sand-*), defined in client/src/index.css
+- Routing with React Router: layout route (MainLayout) with Navbar and Footer, pages Home, Login, Register, PropertyDetails (/properties/:id), Dashboard and a 404 page
+- Responsive Navbar with a Menu button on small screens
+- PropertyCard component and a responsive grid on the Home page, using sample data from client/src/data/sampleProperties.js (prices in rupees)
 
 ## Ongoing
-- The new routing, navbar, footer and pages are written and the dev server starts, but they have NOT been checked in the browser yet.
+- Nothing in progress
 
 ## Pending
-- Browser test of the routing and layout (links, /properties/42, 404 page, mobile menu)
-- Property card component with sample data, shown on the home page
-- Responsive check at mobile, tablet and desktop widths
-- Milestones 3 to 12
+- Milestone 3: backend structure (routes, controllers, models, middleware)
+- Milestones 4 to 12
+- The sample data and the "Photo coming soon" placeholders are temporary. Real data and Cloudinary images come in the property listing milestone.
 
 ## Testing results
 - bcrypt hashing test passed
 - GET http://localhost:5001/api/health returned {"status":"ok","database":"connected"}
-- Client theme test page showed the sand background and teal styling
-- Routing and layout: not tested yet
+- Browser checks passed: Log in and Sign up links change the page without a reload, the active link is highlighted, /properties/42 shows the id, an unknown URL shows the 404 page, the mobile Menu button opens and closes the links
+- Home page grid showed 3 columns on a wide window and 1 column at phone width. Tablet width (2 columns) was not checked.
+- Browser console showed no errors
 
 ## Known issues and limitations
 - The old Atlas database password and JWT_SECRET were shown in a chat screenshot. Both must be replaced before deployment.

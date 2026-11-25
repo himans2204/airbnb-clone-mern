@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-The student is switching assistants mid-way through Milestone 2. Routing, layout and pages are written but not yet tested in the browser. Start with step 1 in NEXT_STEPS.md. The student prefers small, easy steps, one at a time. Never read or print server/.env.
+Milestone 2 is complete and tested in the browser. Start with step 1 in NEXT_STEPS.md (Milestone 3, backend structure). The student prefers small, easy steps, one at a time. Never read or print server/.env.

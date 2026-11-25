@@ -50,3 +50,14 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - The server uses ES modules ("type": "module" in server/package.json).
 - Client: Vite (create-vite 9.x) with React and JavaScript, ESLint for linting, Tailwind CSS v4 through the @tailwindcss/vite plugin (no tailwind.config.js or PostCSS file).
 - The client dev server runs on port 5173 and the API on port 5001.
+
+## Frontend structure
+- client/src/main.jsx wraps the app in BrowserRouter. App.jsx holds the route table.
+- layouts/MainLayout.jsx renders Navbar, the current page (through Outlet) and Footer.
+- pages/: Home, Login, Register, PropertyDetails, Dashboard, NotFound.
+- components/: Navbar, Footer, PropertyCard.
+- data/sampleProperties.js: temporary sample data, to be replaced by API data.
+- services/ is reserved for Axios calls to the API.
+- Routes: / (home), /login, /register, /properties/:id, /dashboard, anything else shows the 404 page.
+- Brand name comes from config.js (APP_NAME). Colours come from the @theme block in index.css, used as classes like bg-brand-600 and bg-sand-100.
+- Prices are shown in rupees.
