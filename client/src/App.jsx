@@ -1,15 +1,25 @@
-import { APP_NAME } from './config';
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import PropertyDetails from './pages/PropertyDetails';
+import Dashboard from './pages/Dashboard';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-      <h1 className="text-4xl font-bold text-brand-700">{APP_NAME}</h1>
-      <p className="text-stone-600">Find a place that feels like home.</p>
-      <button className="rounded-lg bg-brand-600 px-5 py-2 font-medium text-white hover:bg-brand-700">
-        Explore stays
-      </button>
-    </div>
-  )
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/properties/:id" element={<PropertyDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;
