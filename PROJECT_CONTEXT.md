@@ -94,3 +94,14 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - components/ProtectedRoute.jsx sends visitors who are not logged in to /login and remembers the page they wanted, so Login can return them there. It is used for /dashboard.
 - Login and Register show the server's error message from err.response.data.message.
 - The Navbar shows Log in and Sign up when logged out, and Dashboard, the user's name and Log out when logged in.
+
+## Property API
+- GET /api/properties lists all properties, newest first, with the host's name. Public.
+- GET /api/properties/:id returns one property with the host's name. Public. An invalid or unknown id gives 404.
+- GET /api/properties/mine lists the logged-in host's properties. It is defined before /:id so that "mine" is not read as an id.
+- POST /api/properties creates a property. Needs login and the host role.
+- PUT /api/properties/:id and DELETE /api/properties/:id need login and the host role, and only the host who created the property may use them (403 for anyone else).
+- Status codes: 401 not logged in, 403 logged in but not allowed (a guest, or another host's listing), 404 not found, 400 missing or invalid fields.
+- The controller copies only an allowed list of fields from the request (title, description, location, propertyType, pricePerNight, maxGuests, amenities). The host always comes from the login token, so a client cannot set it. This prevents mass assignment.
+- Images (the images array on Property) are not handled yet. They come with Cloudinary and Multer.
+- server/scripts/testProperties.sh checks all of this. Run it inside server/ while the server is running: bash scripts/testProperties.sh

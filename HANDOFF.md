@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-Milestone 5 (authentication) is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 6, property listing management). The student prefers small, easy steps, one at a time. Never read or print server/.env or client/.env.
+The property API (Milestone 6, backend) is complete and tested with server/scripts/testProperties.sh. Start with step 1 in NEXT_STEPS.md (the listing pages in the client). The student prefers small, easy steps, one at a time. Never read or print server/.env or client/.env.
