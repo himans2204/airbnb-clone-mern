@@ -1,15 +1,15 @@
 # Next Steps
 
-Milestone 3: backend setup and API structure
+Milestone 4: MongoDB connection and models
 
-1. Create folders in server/: config, models, controllers, routes, middleware.
-2. Move the MongoDB connection from server.js into config/db.js.
-3. Split the Express app (app.js) from the code that starts the server (server.js).
-4. Move the health check into routes/healthRoutes.js and test it again at http://localhost:5001/api/health.
-5. Add a 404 handler for unknown API routes and a general error handler in middleware/.
-6. Test with Postman: health check, an unknown route, and an error case.
-7. Update PROGRESS.md, commit and push. Milestone 3 is then complete.
-8. Start Milestone 4: Mongoose models (User, Property, Booking).
+1. Agree on the fields for each model:
+   - User: name, email (unique), password (hashed), role (guest or host)
+   - Property: host (a User), title, description, location, propertyType, pricePerNight, maxGuests, amenities, images
+   - Booking: property, guest (a User), checkIn, checkOut, guests, totalPrice, status
+2. Create server/models/User.js, Property.js and Booking.js with Mongoose schemas and validation.
+3. Test the models with a small throwaway script that creates one document of each, check them in Atlas (Browse Collections), then delete the test data and the script.
+4. Update PROGRESS.md, commit and push. Milestone 4 is then complete.
+5. Start Milestone 5: authentication (register, login, JWT, protected routes).
 
 Optional: check the Home page grid at tablet width (should show 2 columns).
 

@@ -61,3 +61,11 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - Routes: / (home), /login, /register, /properties/:id, /dashboard, anything else shows the 404 page.
 - Brand name comes from config.js (APP_NAME). Colours come from the @theme block in index.css, used as classes like bg-brand-600 and bg-sand-100.
 - Prices are shown in rupees.
+
+## Backend structure
+- server/server.js loads the environment variables, connects to MongoDB and starts the server.
+- server/app.js creates the Express app, adds cors and express.json, mounts the routes, then the notFound and errorHandler middleware.
+- config/db.js holds the MongoDB connection (connectDB).
+- routes/ maps URLs to controller functions. controllers/ holds the request handlers. middleware/ holds shared code such as error handling. models/ will hold the Mongoose models (Milestone 4).
+- Current route: GET /api/health.
+- Errors are returned as JSON: {"message": "..."} with a suitable status code.

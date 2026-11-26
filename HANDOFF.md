@@ -28,7 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-Milestone 2 is complete and tested in the browser. Start with step 1 in NEXT_STEPS.md (Milestone 3, backend structure). The student prefers small, easy steps, one at a time. Never read or print server/.env.
-
-## Note on Milestone 3
-The backend restructure (config/, routes/, controllers/, middleware/, app.js and a shorter server.js) was made by a script and may exist locally, but it is NOT tested or committed. Run git status first. To test: cd server, npm run dev, then curl http://localhost:5001/api/health (expect status ok, database connected). Also test an unknown route (JSON 404) and a POST with bad JSON to /api/health (JSON 400). If it fails, restore the old server with git restore server/server.js and delete the new folders. Commit only after it works.
+Milestone 3 is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 4, models). The student prefers small, easy steps, one at a time. Never read or print server/.env.
