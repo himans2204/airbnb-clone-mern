@@ -76,3 +76,13 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - Booking: property (ref Property), guest (ref User), checkIn, checkOut (must be after checkIn), guests, totalPrice, status (pending, confirmed or cancelled, default pending), timestamps. Indexed on property, checkIn and checkOut for the availability check.
 - Roles: guest and host. A host is a user who lists properties.
 - server/scripts/testModels.js checks the models against the real database and deletes the data it creates. Run it from server/ with: node scripts/testModels.js
+
+## Authentication
+- POST /api/auth/register takes name, email, password and an optional role (guest or host). It returns id, name, email, role and a token.
+- POST /api/auth/login takes email and password. A wrong email and a wrong password give the same message (401), so it does not reveal which one was wrong.
+- GET /api/auth/me needs the header Authorization: Bearer <token> and returns the user without the password.
+- The token is a JWT signed with JWT_SECRET and expires in 7 days. The payload holds only the user id.
+- The register and login controllers reject an email or password that is not a string, which blocks NoSQL injection such as {"email": {"$gt": ""}}.
+- protect (middleware/authMiddleware.js) verifies the token and puts the user in req.user. restrictTo('host') blocks other roles with 403.
+- Errors use res.status(...) and next(error), and the errorHandler sends {"message": "..."}.
+- server/scripts/testAuth.sh checks all of this. Run it inside server/ while the server is running: bash scripts/testAuth.sh

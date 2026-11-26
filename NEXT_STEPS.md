@@ -1,24 +1,18 @@
 # Next Steps
 
-Milestone 5: authentication
+Milestone 5, frontend part: login and registration in the React client
 
-Backend:
-1. Replace JWT_SECRET in server/.env with a new random value, because the old one was shown in a chat screenshot. Restart the server.
-2. Create a helper that makes a JWT for a user id (expires in 7 days).
-3. Create controllers/authController.js with register and login. Never return the password.
-4. Create middleware/authMiddleware.js: protect (reads the Bearer token, verifies it, attaches req.user) and restrictTo (checks the role).
-5. Create routes/authRoutes.js with POST /api/auth/register, POST /api/auth/login and GET /api/auth/me (protected), and mount it in app.js.
-6. Test with curl or Postman: register, duplicate email, login with a wrong password, login, /me with and without a token.
-7. Update PROGRESS.md, commit and push.
-
-Frontend:
-8. Create an AuthContext that stores the user and token, with login and logout.
-9. Build the Login and Register forms and connect them to the API with Axios.
-10. Add a ProtectedRoute for /dashboard, and show Log in, Sign up or Log out in the Navbar depending on the user.
-11. Test in the browser, update the docs, commit and push. Milestone 5 is then complete.
+1. Create client/src/services/api.js: an Axios instance with baseURL from VITE_API_URL (default http://localhost:5001/api). Add client/.env.example and client/.env with VITE_API_URL. The CORS setup on the server already allows the client.
+2. Create client/src/context/AuthContext.jsx: keeps the user and token, with login, register and logout functions. Store the token in localStorage so a refresh keeps the user logged in, and load it again when the app starts.
+3. Build the Login and Register forms (pages/Login.jsx and Register.jsx): controlled inputs, a loading state, and the server's error message shown on the page. Registration lets the user choose guest or host.
+4. Create components/ProtectedRoute.jsx and use it for /dashboard. Visitors who are not logged in are sent to /login.
+5. Update the Navbar: show Log in and Sign up when logged out, and the user's name with a Log out button when logged in. Keep the mobile menu working.
+6. Test in the browser: register, log out, log in, wrong password message, refresh keeps the login, /dashboard redirects when logged out.
+7. Update PROGRESS.md, commit and push. Milestone 5 is then complete.
+8. Start Milestone 6: property listing management (create, edit, delete, image upload with Multer and Cloudinary). Use restrictTo('host') on the create, edit and delete routes.
 
 Decision to make later (Milestone 8): the Booking status currently defaults to pending. Decide whether bookings are confirmed immediately or need host approval.
 
 Optional: check the Home page grid at tablet width (should show 2 columns).
 
-Before deployment: also reset the Atlas database user password, because it was shown in a chat screenshot. Update server/.env and restart the server.
+Before deployment: reset the Atlas database user password, because it was shown in a chat screenshot. Update server/.env and restart the server.
