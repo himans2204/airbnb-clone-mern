@@ -69,3 +69,10 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - routes/ maps URLs to controller functions. controllers/ holds the request handlers. middleware/ holds shared code such as error handling. models/ will hold the Mongoose models (Milestone 4).
 - Current route: GET /api/health.
 - Errors are returned as JSON: {"message": "..."} with a suitable status code.
+
+## Data models
+- User: name, email (unique, lowercase), password (hashed with bcrypt in a pre-save hook), role (guest or host), timestamps. Method matchPassword compares a plain password with the stored hash.
+- Property: host (ref User), title, description, location, propertyType (Apartment, House, Cottage, Room, Houseboat, Villa), pricePerNight, maxGuests, amenities (array of strings), images (array of url and publicId, for Cloudinary), timestamps.
+- Booking: property (ref Property), guest (ref User), checkIn, checkOut (must be after checkIn), guests, totalPrice, status (pending, confirmed or cancelled, default pending), timestamps. Indexed on property, checkIn and checkOut for the availability check.
+- Roles: guest and host. A host is a user who lists properties.
+- server/scripts/testModels.js checks the models against the real database and deletes the data it creates. Run it from server/ with: node scripts/testModels.js

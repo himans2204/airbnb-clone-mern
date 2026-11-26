@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-Milestone 3 is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 4, models). The student prefers small, easy steps, one at a time. Never read or print server/.env.
+Milestone 4 is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 5, authentication). The student prefers small, easy steps, one at a time. Never read or print server/.env.
