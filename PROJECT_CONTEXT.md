@@ -86,3 +86,11 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - protect (middleware/authMiddleware.js) verifies the token and puts the user in req.user. restrictTo('host') blocks other roles with 403.
 - Errors use res.status(...) and next(error), and the errorHandler sends {"message": "..."}.
 - server/scripts/testAuth.sh checks all of this. Run it inside server/ while the server is running: bash scripts/testAuth.sh
+
+## Frontend authentication
+- services/api.js is an Axios instance. The base URL comes from VITE_API_URL in client/.env (see client/.env.example). A request interceptor adds the saved token as a Bearer token.
+- context/authContext.js holds the context and the useAuth hook. context/AuthProvider.jsx keeps the user, and has login, register and logout. The token and the user are saved in localStorage so a refresh keeps the login. (The trade-off: JavaScript on the page can read localStorage. httpOnly cookies are the more secure option in production.)
+- AuthProvider wraps App in main.jsx, inside BrowserRouter.
+- components/ProtectedRoute.jsx sends visitors who are not logged in to /login and remembers the page they wanted, so Login can return them there. It is used for /dashboard.
+- Login and Register show the server's error message from err.response.data.message.
+- The Navbar shows Log in and Sign up when logged out, and Dashboard, the user's name and Log out when logged in.
