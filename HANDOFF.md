@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-The property API (Milestone 6, backend) is complete and tested with server/scripts/testProperties.sh. Start with step 1 in NEXT_STEPS.md (the listing pages in the client). The student prefers small, easy steps, one at a time. Never read or print server/.env or client/.env.
+Listings work end to end in the client (Milestone 6) except for images. Start with step 1 in NEXT_STEPS.md (Cloudinary setup, which the student does in the Cloudinary dashboard and in server/.env). The student prefers small, easy steps, one at a time. Never read or print server/.env or client/.env.

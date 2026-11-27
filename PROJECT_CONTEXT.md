@@ -105,3 +105,11 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - The controller copies only an allowed list of fields from the request (title, description, location, propertyType, pricePerNight, maxGuests, amenities). The host always comes from the login token, so a client cannot set it. This prevents mass assignment.
 - Images (the images array on Property) are not handled yet. They come with Cloudinary and Multer.
 - server/scripts/testProperties.sh checks all of this. Run it inside server/ while the server is running: bash scripts/testProperties.sh
+
+## Listing pages in the client
+- Home loads GET /api/properties and shows a loading message, an error message, an empty message or the grid of PropertyCard components. PropertyDetails loads GET /api/properties/:id and separates "not found" (404) from "server not reachable".
+- Pages load data in useEffect with an ignore flag, so an old response cannot update the page after it has changed or unmounted.
+- components/PropertyForm.jsx is used by AddProperty and EditProperty. It turns the price and guest inputs into numbers and the comma-separated amenities into an array before submitting. EditProperty loads the property first and only then renders the form, so the form starts with the saved values.
+- Routes (all inside ProtectedRoute): /dashboard, /dashboard/properties/new and /dashboard/properties/:id/edit.
+- The Dashboard shows "My listings" (GET /api/properties/mine) for hosts, with View, Edit and Delete (confirm first). Guests see a short message. The server enforces ownership, so editing someone else's listing returns 403.
+- Prices are shown in rupees (en-IN formatting). Property fields in the client use the API names: propertyType, maxGuests, pricePerNight, and _id for the id.

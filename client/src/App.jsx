@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PropertyDetails from './pages/PropertyDetails';
 import Dashboard from './pages/Dashboard';
+import AddProperty from './pages/AddProperty';
+import EditProperty from './pages/EditProperty';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -21,6 +23,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/properties/new"
+          element={
+            <ProtectedRoute>
+              <AddProperty />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/properties/:id/edit"
+          element={
+            <ProtectedRoute>
+              <EditProperty />
             </ProtectedRoute>
           }
         />
