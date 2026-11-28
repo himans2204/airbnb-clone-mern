@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-Milestone 6 (listings with images) is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 7, search and filters). The student prefers small, easy steps, one at a time, short replies, and no viva talking points. Never read or print server/.env or client/.env.
+The search and filter backend (Milestone 7) is complete and tested. Start with step 1 in NEXT_STEPS.md (the search form on the Home page). The student prefers small, easy steps, one at a time, short replies, and no viva talking points. Helper scripts are written for the student to download and run (for example bash ~/Downloads/script.sh from the project root), each tested in a temporary folder first and with a guard that stops it outside the project root. Never read or print server/.env or client/.env.

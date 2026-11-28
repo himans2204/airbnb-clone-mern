@@ -123,3 +123,9 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - Property.images is an array of { url, publicId } without _id.
 - Multer errors and rejected files return 400 through the error handler.
 - Client: PropertyForm builds a FormData with a photo picker (previews, remove and undo, same limits as the server). The Axios instance does not set a Content-Type, so the browser sets the multipart boundary.
+
+## Search and filters
+- GET /api/properties query parameters: location (case-insensitive partial match, regex characters are escaped), minPrice, maxPrice, propertyType (one of the model's allowed types), guests (maxGuests greater than or equal), checkIn and checkOut (YYYY-MM-DD, given together, checkOut after checkIn, checkIn not in the past) and sort (newest, price_asc or price_desc).
+- server/utils/propertyFilters.js (buildPropertyQuery) reads and validates the values and returns a MongoDB filter and a sort order. A value that is not a string (for example a repeated parameter) or a bad value throws an error with status 400.
+- Date filter: properties with a confirmed booking where booking.checkIn < checkOut and booking.checkOut > checkIn are left out. A guest can check in on the day another booking ends, and check out on the day another starts. Pending and cancelled bookings do not block dates.
+- Tests: scripts/testSearch.sh (HTTP, server running), scripts/testAvailability.js (inserts and deletes its own bookings in the database).

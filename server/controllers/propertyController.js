@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Property from '../models/Property.js';
 import { uploadImageBuffer, deleteImage } from '../utils/cloudinaryUpload.js';
+import { buildPropertyQuery } from '../utils/propertyFilters.js';
 
 const MAX_IMAGES = 5;
 
@@ -112,7 +113,8 @@ export async function createProperty(req, res, next) {
 
 export async function getProperties(req, res, next) {
   try {
-    const properties = await Property.find().populate('host', 'name').sort({ createdAt: -1 });
+    const { filter, sort } = await buildPropertyQuery(req.query);
+    const properties = await Property.find(filter).populate('host', 'name').sort(sort);
     res.json(properties);
   } catch (error) {
     next(error);
