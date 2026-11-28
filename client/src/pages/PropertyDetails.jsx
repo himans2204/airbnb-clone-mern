@@ -46,15 +46,28 @@ function PropertyDetails() {
     );
   }
 
-  const photo = property.images && property.images.length > 0 ? property.images[0].url : null;
+  const images = property.images || [];
 
   return (
     <section className="mx-auto max-w-3xl">
-      {photo ? (
-        <img src={photo} alt={property.title} className="h-72 w-full rounded-xl object-cover" />
+      {images.length > 0 ? (
+        <img src={images[0].url} alt={property.title} className="h-72 w-full rounded-xl object-cover" />
       ) : (
         <div className="flex h-72 items-center justify-center rounded-xl bg-sand-200 text-stone-500">
           Photo coming soon
+        </div>
+      )}
+
+      {images.length > 1 && (
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {images.slice(1).map((image) => (
+            <img
+              key={image.publicId}
+              src={image.url}
+              alt={property.title}
+              className="h-24 w-full rounded-lg object-cover"
+            />
+          ))}
         </div>
       )}
 

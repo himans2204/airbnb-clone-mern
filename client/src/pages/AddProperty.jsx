@@ -10,12 +10,12 @@ function AddProperty() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(values) {
+  async function handleSubmit(formData) {
     setError('');
     setLoading(true);
 
     try {
-      const { data } = await api.post('/properties', values);
+      const { data } = await api.post('/properties', formData);
       navigate(`/properties/${data._id}`);
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');

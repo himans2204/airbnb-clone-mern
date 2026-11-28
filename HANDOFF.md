@@ -28,4 +28,4 @@ Update PROGRESS.md and NEXT_STEPS.md, record modified files, test results and kn
 See PROGRESS.md. Last updated at the end of project setup.
 
 ## Latest handoff note
-Listings work end to end in the client (Milestone 6) except for images. Start with step 1 in NEXT_STEPS.md (Cloudinary setup, which the student does in the Cloudinary dashboard and in server/.env). The student prefers small, easy steps, one at a time. Never read or print server/.env or client/.env.
+Milestone 6 (listings with images) is complete and tested. Start with step 1 in NEXT_STEPS.md (Milestone 7, search and filters). The student prefers small, easy steps, one at a time, short replies, and no viva talking points. Never read or print server/.env or client/.env.

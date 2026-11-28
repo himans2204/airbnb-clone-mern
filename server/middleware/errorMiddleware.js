@@ -6,8 +6,8 @@ export function notFound(req, res, next) {
 export function errorHandler(err, req, res, next) {
   let statusCode = err.status || (res.statusCode === 200 ? 500 : res.statusCode);
 
-  // Mongoose validation errors and duplicate keys are caused by bad input, not by the server.
-  if (err.name === 'ValidationError' || err.code === 11000) {
+  // Bad input is not a server error: Mongoose validation, duplicate keys and upload limits.
+  if (err.name === 'ValidationError' || err.name === 'MulterError' || err.code === 11000) {
     statusCode = 400;
   }
 

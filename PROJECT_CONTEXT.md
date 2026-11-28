@@ -113,3 +113,13 @@ Airbnb-inspired booking platform, built as a B.Tech CSE capstone (Module 8). The
 - Routes (all inside ProtectedRoute): /dashboard, /dashboard/properties/new and /dashboard/properties/:id/edit.
 - The Dashboard shows "My listings" (GET /api/properties/mine) for hosts, with View, Edit and Delete (confirm first). Guests see a short message. The server enforces ownership, so editing someone else's listing returns 403.
 - Prices are shown in rupees (en-IN formatting). Property fields in the client use the API names: propertyType, maxGuests, pricePerNight, and _id for the id.
+
+## Image uploads
+- Images are stored on Cloudinary. The credentials are in one setting, CLOUDINARY_URL, in server/.env (see server/.env.example for the format). The cloudinary package reads it from the environment, so config/cloudinary.js only sets secure: true. server.js loads dotenv before anything else so the variable is set before the package loads.
+- middleware/uploadMiddleware.js uses Multer with memory storage: images only, up to 5 files, 5 MB each, field name "images". Files are never written to the server's disk.
+- In the routes, protect and restrictTo run before uploadImages, so only logged-in hosts can send files.
+- utils/cloudinaryUpload.js has uploadImageBuffer (uploads to the folder stayinyourroom and returns url and publicId) and deleteImage.
+- propertyController: create and update accept multipart form data or plain JSON. Text fields are validated before any upload. If an upload or the save fails, the pictures already uploaded are removed. Update accepts new files in "images" and a JSON list of publicIds in "removeImages", with a limit of 5 pictures in total. Delete also removes the pictures from Cloudinary.
+- Property.images is an array of { url, publicId } without _id.
+- Multer errors and rejected files return 400 through the error handler.
+- Client: PropertyForm builds a FormData with a photo picker (previews, remove and undo, same limits as the server). The Axios instance does not set a Content-Type, so the browser sets the multipart boundary.

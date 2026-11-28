@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import Property from '../models/Property.js';
+import { uploadImageBuffer, deleteImage } from '../utils/cloudinaryUpload.js';
+
+const MAX_IMAGES = 5;
 
 // Only these fields can be set by the client. The host always comes from the logged-in user.
 const editableFields = [
@@ -12,13 +15,34 @@ const editableFields = [
   'amenities',
 ];
 
+// Forms send lists as text. This accepts an array, a JSON list or a comma-separated string.
+function toList(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch {
+      // not JSON, so treat it as a comma-separated list
+    }
+    return value.split(',').map((item) => item.trim()).filter(Boolean);
+  }
+
+  return [];
+}
+
 function pickEditableFields(body) {
   const data = {};
   const source = body || {};
 
   for (const field of editableFields) {
     if (source[field] !== undefined) {
-      data[field] = source[field];
+      data[field] = field === 'amenities' ? toList(source[field]) : source[field];
     }
   }
 
@@ -43,9 +67,43 @@ function checkOwner(property, user, res) {
   }
 }
 
+async function removeFromCloudinary(images) {
+  await Promise.allSettled(images.map((image) => deleteImage(image.publicId)));
+}
+
+// Uploads all files. If one fails, the ones that already went up are removed again.
+async function uploadFiles(files, res) {
+  const results = await Promise.allSettled(files.map((file) => uploadImageBuffer(file.buffer)));
+  const uploaded = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
+  const failed = results.find((result) => result.status === 'rejected');
+
+  if (failed) {
+    await removeFromCloudinary(uploaded);
+    console.error('Cloudinary upload failed:', failed.reason?.message);
+    res.status(failed.reason?.http_code === 400 ? 400 : 500);
+    throw new Error('Could not upload the images. Please check the files and try again.');
+  }
+
+  return uploaded;
+}
+
 export async function createProperty(req, res, next) {
   try {
-    const property = await Property.create({ ...pickEditableFields(req.body), host: req.user._id });
+    const property = new Property({ ...pickEditableFields(req.body), host: req.user._id });
+
+    // Check the text fields first, so nothing is uploaded for a listing that would be rejected.
+    await property.validate();
+
+    const uploaded = await uploadFiles(req.files || [], res);
+    property.images = uploaded;
+
+    try {
+      await property.save();
+    } catch (error) {
+      await removeFromCloudinary(uploaded);
+      throw error;
+    }
+
     res.status(201).json(property);
   } catch (error) {
     next(error);
@@ -85,8 +143,30 @@ export async function updateProperty(req, res, next) {
     const property = await findPropertyOr404(req.params.id, res);
     checkOwner(property, req.user, res);
 
+    const files = req.files || [];
+    const idsToRemove = toList(req.body?.removeImages);
+    const keptImages = property.images.filter((image) => !idsToRemove.includes(image.publicId));
+    const removedImages = property.images.filter((image) => idsToRemove.includes(image.publicId));
+
+    if (keptImages.length + files.length > MAX_IMAGES) {
+      res.status(400);
+      throw new Error(`A property can have at most ${MAX_IMAGES} images`);
+    }
+
     Object.assign(property, pickEditableFields(req.body));
-    await property.save();
+    await property.validate();
+
+    const uploaded = await uploadFiles(files, res);
+    property.images = [...keptImages, ...uploaded];
+
+    try {
+      await property.save();
+    } catch (error) {
+      await removeFromCloudinary(uploaded);
+      throw error;
+    }
+
+    await removeFromCloudinary(removedImages);
 
     res.json(property);
   } catch (error) {
@@ -100,6 +180,7 @@ export async function deleteProperty(req, res, next) {
     checkOwner(property, req.user, res);
 
     await property.deleteOne();
+    await removeFromCloudinary(property.images);
 
     res.json({ message: 'Property deleted' });
   } catch (error) {

@@ -34,12 +34,12 @@ function EditProperty() {
     };
   }, [id]);
 
-  async function handleSubmit(values) {
+  async function handleSubmit(formData) {
     setSaveError('');
     setSaving(true);
 
     try {
-      await api.put(`/properties/${id}`, values);
+      await api.put(`/properties/${id}`, formData);
       navigate(`/properties/${id}`);
     } catch (err) {
       setSaveError(err.response?.data?.message || 'Something went wrong. Please try again.');
@@ -69,6 +69,7 @@ function EditProperty() {
     pricePerNight: String(property.pricePerNight),
     maxGuests: String(property.maxGuests),
     amenities: (property.amenities || []).join(', '),
+    images: property.images || [],
   };
 
   return (

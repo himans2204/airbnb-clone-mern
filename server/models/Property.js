@@ -14,7 +14,7 @@ const propertySchema = new mongoose.Schema(
     pricePerNight: { type: Number, required: true, min: 1 },
     maxGuests: { type: Number, required: true, min: 1 },
     amenities: [String],
-    images: [{ url: String, publicId: String }],
+    images: [{ _id: false, url: String, publicId: String }],
   },
   { timestamps: true }
 );
